@@ -17,6 +17,9 @@ build/                # Gradle의 빌드 결과물
 *.jar                 # Java 애플리케이션 패키지
 *.war                 # 웹 애플리케이션 패키지
 *.ear                 # 엔터프라이즈 애플리케이션 패키지
+**/*.class
+**/*.lock
+**/*.bin
 
 # 의존성 관련 파일들
 *.lock                # 의존성 관리 파일들 (npm, yarn, Gradle 등)
