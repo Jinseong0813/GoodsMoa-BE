@@ -24,19 +24,69 @@ repositories {
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+
+	// [MySQL Connector]
+	// MySQL 데이터베이스와 연결하기 위한 JDBC 드라이버.
+	runtimeOnly 'mysql:mysql-connector-java:8.0.33'
+
+	// [Spring Security]
+	// Spring Security 기능을 위한 의존성이야. (인증, 인가 등 보안 관련 기능 제공)
 	implementation 'org.springframework.boot:spring-boot-starter-security'
-	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+
+	// [Spring Web]
+	// REST API, MVC 등 웹 관련 기능을 사용하기 위한 의존성이야.
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
+
+	// [Spring Data JPA]
+	// Spring Data JPA를 사용하여 데이터베이스와 상호작용할 수 있어. (JPA와 관련된 기능 제공)
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+	// [Lombok]
+	// 코드에서 반복되는 getter/setter 등을 자동으로 생성해주는 라이브러리.
+	// 컴파일 시에만 필요해서 compileOnly로 설정해.
 	compileOnly 'org.projectlombok:lombok'
-	runtimeOnly 'com.h2database:h2'
-	runtimeOnly 'com.mysql:mysql-connector-j'
+
+	// [Spring Boot DevTools]
+	// 개발할 때만 유용한 기능(자동 재시작, 라이브 리로드 등)을 제공하는 의존성이야.
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+	// [MySQL Connector]
+	// MySQL 데이터베이스와 연결하기 위한 JDBC 드라이버.
+	runtimeOnly 'mysql:mysql-connector-java:8.0.33'
+
+
+	// [Lombok Annotation Processor]
+	// Lombok이 어노테이션을 처리할 수 있도록 도와주는 설정!
 	annotationProcessor 'org.projectlombok:lombok'
+
+	// [Spring Boot Test]
+	// Spring Boot에서 테스트를 쉽게 할 수 있도록 도와주는 라이브러리.
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+	// [Spring Security Test]
+	// Spring Security 기능을 테스트할 때 사용하는 라이브러리.
 	testImplementation 'org.springframework.security:spring-security-test'
+
+	// [JUnit Platform Launcher]
+	// JUnit 5 테스트 실행을 위한 의존성이야.
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+	// [Spring Boot Configuration Processor]
+	// application.properties나 application.yml에 작성한 설정값들을 IDE에서 쉽게 인식하도록 도와줌.
+	implementation 'org.springframework.boot:spring-boot-configuration-processor'
+
+	// [JWT 관련 의존성]
+	// JSON Web Token(JWT)을 생성, 파싱, 검증하는 기능을 제공하는 라이브러리들!
+	// jjwt-api: JWT API 사용, jjwt-impl: 실제 구현체, jjwt-jackson: JSON 처리(Jackson) 지원.
+	implementation 'io.jsonwebtoken:jjwt-api:0.12.6'
+	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.12.6'
+	runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.12.6'
+
+	// ✅ OAuth2 클라이언트 (카카오 로그인)
+	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 }
+
 
 tasks.named('test') {
 	useJUnitPlatform()
