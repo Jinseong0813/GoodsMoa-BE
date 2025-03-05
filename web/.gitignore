@@ -1,0 +1,29 @@
+# OS에서 생성되는 파일들 (Windows, macOS 등)
+.DS_Store             # macOS에서 생성되는 파일
+Thumbs.db             # Windows에서 생성되는 파일
+
+# IDE 관련 파일들
+.idea/                # IntelliJ IDEA 설정 폴더
+.vscode/              # Visual Studio Code 설정 폴더
+*.iml                 # IntelliJ IDEA에서 생성되는 파일들
+
+# 빌드 관련 파일들
+target/               # Maven, Gradle의 빌드 결과물
+build/                # Gradle의 빌드 결과물
+
+# 바이너리 파일들
+*.bin                 # 바이너리 파일
+*.class               # Java 컴파일 결과물
+*.jar                 # Java 애플리케이션 패키지
+*.war                 # 웹 애플리케이션 패키지
+*.ear                 # 엔터프라이즈 애플리케이션 패키지
+
+# 의존성 관련 파일들
+*.lock                # 의존성 관리 파일들 (npm, yarn, Gradle 등)
+package-lock.json     # npm 의존성 파일
+yarn.lock             # yarn 의존성 파일
+gradle.lockfile       # Gradle 의존성 파일
+
+# 기타 설정 파일들
+*.log                 # 로그 파일들
+*.tmp                 # 임시 파일들
