@@ -11,14 +11,14 @@
 
 
 
-package security.service;
+package com.goodsmoa.web.security.service;
 
 
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.core.user.OAuth2User;
-import user.Entity.User;
+import com.goodsmoa.web.user.Entity.User;
 
 import java.util.Collection;
 import java.util.List;

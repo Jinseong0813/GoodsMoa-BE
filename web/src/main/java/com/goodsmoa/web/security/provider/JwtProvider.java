@@ -1,7 +1,7 @@
 
 /* jwt 토큰 페이로드에는 id, role, nickname 넣음 */
 
-package security.provider;
+package com.goodsmoa.web.security.provider;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
@@ -9,15 +9,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
-import security.constrants.SecurityConstants;
-import security.props.JwtProps;
-import user.Entity.User;
-import user.service.UserService;
+import com.goodsmoa.web.security.constrants.SecurityConstants;
+import com.goodsmoa.web.security.props.JwtProps;
+import com.goodsmoa.web.user.Entity.User;
+import com.goodsmoa.web.user.service.UserService;
 
 import javax.crypto.SecretKey;
-import java.math.BigInteger;
 import java.util.Date;
 
 @Slf4j

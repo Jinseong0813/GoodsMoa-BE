@@ -1,4 +1,4 @@
-package user.Entity;
+package com.goodsmoa.web.user.Entity;
 
 /*
  ID, 비밀번호, 이메일, 닉네임은 not null임

@@ -11,7 +11,7 @@
 * */
 
 
-package config;
+package com.goodsmoa.web.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -28,13 +28,13 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import security.filter.JwtRequestFilter;
-import security.provider.JwtProvider;
+import com.goodsmoa.web.security.filter.JwtRequestFilter;
+import com.goodsmoa.web.security.provider.JwtProvider;
 
 import java.util.Arrays;
 
-import security.service.CustomOAuth2UserService;
-import security.handler.OAuth2LoginSuccessHandler;
+import com.goodsmoa.web.security.service.CustomOAuth2UserService;
+import com.goodsmoa.web.security.handler.OAuth2LoginSuccessHandler;
 
 @Configuration
 @EnableMethodSecurity(prePostEnabled = true, securedEnabled = true)

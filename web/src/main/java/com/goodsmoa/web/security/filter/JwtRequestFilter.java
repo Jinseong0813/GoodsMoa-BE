@@ -10,7 +10,7 @@
 *
 * */
 
-package security.filter;
+package com.goodsmoa.web.security.filter;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -21,8 +21,8 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
-import security.constrants.SecurityConstants;
-import security.provider.JwtProvider;
+import com.goodsmoa.web.security.constrants.SecurityConstants;
+import com.goodsmoa.web.security.provider.JwtProvider;
 
 import java.io.IOException;
 

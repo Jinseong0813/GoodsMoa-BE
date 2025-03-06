@@ -11,7 +11,7 @@
 * */
 
 
-package security.constrants;
+package com.goodsmoa.web.security.constrants;
 
 /* jwt 토큰은 http 헤더중 authorization이라는 헤더에 담김! */
 /**
