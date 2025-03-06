@@ -36,6 +36,7 @@
 # since they will be recreated, and may cause churn.  Uncomment if using
 # auto-import.
 # .idea/artifacts
+# .idea/artifacts
 # .idea/compiler.xml
 # .idea/jarRepositories.xml
 # .idea/modules.xml
@@ -80,6 +81,9 @@ fabric.properties
 # Android studio 3.1+ serialized cache file
 .idea/caches/build_file_checksums.ser
 
+# 자동 생성된 파일을 무시
+problems-report.html
+
 ### Intellij Patch ###
 # Comment Reason: https://github.com/joeblau/gitignore.io/issues/186#issuecomment-215987721
 
@@ -87,7 +91,8 @@ fabric.properties
 # modules.xml
 # .idea/misc.xml
 # *.ipr
-
+.idea/misc.xml
+.idea/workspace.xml
 # Sonarlint plugin
 # https://plugins.jetbrains.com/plugin/7973-sonarlint
 .idea/**/sonarlint/

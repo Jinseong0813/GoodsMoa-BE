@@ -22,7 +22,7 @@ import java.math.BigInteger;
 public class User {
 
     @Id // 기본 키(PK) 지정
-    @Column(name = "id", nullable = false) // 컬럼 이름 설정 및 NULL 값 허용 X
+    @Column(name = "id", length = 30, nullable = false) // 컬럼 이름 설정 및 NULL 값 허용 X
     private String id; // 유저 ID (기본 키)
 
     @Column(name = "name", length = 10) // 최대 길이 10 설정
