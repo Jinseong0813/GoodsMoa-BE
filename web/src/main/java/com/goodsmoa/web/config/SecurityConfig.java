@@ -13,6 +13,7 @@
 
 package com.goodsmoa.web.config;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -31,11 +32,14 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import com.goodsmoa.web.security.filter.JwtRequestFilter;
 import com.goodsmoa.web.security.provider.JwtProvider;
 
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
 import com.goodsmoa.web.security.service.CustomOAuth2UserService;
-import com.goodsmoa.web.security.handler.OAuth2LoginSuccessHandler;
 
+
+@Slf4j
 @Configuration
 @EnableMethodSecurity(prePostEnabled = true, securedEnabled = true)
 public class SecurityConfig {
@@ -44,9 +48,6 @@ public class SecurityConfig {
     @Autowired
     private CustomOAuth2UserService customOAuth2UserService; // ✅ 객체(Bean)로 주입
 
-    //✅ 카카오 로그인 성공 핸들러 객체 주입
-    @Autowired
-    private OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler; // ✅ 성공 핸들러 객체 주입
 
     // 비밀번호 암호화 빈 등록
     @Bean
@@ -118,28 +119,31 @@ public class SecurityConfig {
         http.cors(cors -> cors.configurationSource(corsConfigurationSource())); // CorsConfigurationSource 적용
 
 
-        // ✅ URL별 접근 권한 설정
+
+        //이거 왜인지 작동안함-> 걍 필터에서 처리함
         http.authorizeHttpRequests(auth -> auth
-                .requestMatchers("/oauth2/**", "/login/**").permitAll() // ✅ 카카오 로그인 허용
-                .anyRequest().authenticated() // ✅ 그 외 모든 요청은 인증 필요
+                .requestMatchers("/login/**", "/oauth2/**", "/public/**", "/error").permitAll() // ✅ 로그인 관련 요청 모두 허용
+                .requestMatchers("/mypage/**", "/orders/**", "/cart/**").authenticated() // 로그인 필요
+                .anyRequest().permitAll()
         );
 
+        //requestfilter추가
+        http.addFilterBefore(new JwtRequestFilter(authenticationManager(http), jwtProvider), UsernamePasswordAuthenticationFilter.class);
+
+
+
+        // ✅ OAuth2 로그인 설정 (카카오 로그인)
         // ✅ OAuth2 로그인 설정 (카카오 로그인)
         http.oauth2Login(oauth2 -> oauth2
                 .userInfoEndpoint(userInfo -> userInfo
                         // CustomOAuth2UserService: 🔹 로그인시 카카오 로그인 사용자 정보 처리하고 jwt 발급해줌
                         .userService(customOAuth2UserService)
                 )
-                .successHandler(oAuth2LoginSuccessHandler) // 🔹 로그인 성공 시 JWT 발급
+                .successHandler((request, response, authentication) -> {
+                    // 로그인 성공 시 https://witchform.com/w/main으로 리디렉션
+                    response.sendRedirect("https://witchform.com/w/main");
+                })
         );
-
-
-        // ✅ JWT 필터 추가 (모든 요청 전에 실행)
- /*       📌 JwtRequestFilter가 하는 역할
-✅ 모든 요청마다 Authorization 헤더를 확인하고, JWT가 유효한지 검사함
-✅ JWT가 유효하면 SecurityContextHolder에 사용자 인증 정보 저장
-✅ 이제 인증된 사용자만 API 요청을 할 수 있음!*/
-        http.addFilterBefore(new JwtRequestFilter(authenticationManager(http), jwtProvider), UsernamePasswordAuthenticationFilter.class);
 
 
         return http.build();

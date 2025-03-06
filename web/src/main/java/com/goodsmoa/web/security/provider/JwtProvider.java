@@ -29,32 +29,32 @@ public class JwtProvider {
     @Lazy // 여기서 @Lazy를 붙여주면 의존성 주입이 지연됨
     private UserService userService;
 
-    /**
-     * JWT 토큰을 생성하는 메서드
-     *
-     * @return 생성된 JWT 토큰
-     */
-    public String createToken(User user) {
 
+    /**
+     * 실제 사용할 수 있는 시크릿키를 반환하는 메서드
+     * @return 시크릿키
+     */
+    public SecretKey getShaKey() {
         // JwtProps에서 시크릿 키를 가져온다.
         String secretKey = jwtProps.getSecretKey();
 
-        // 시크릿 키가 null 또는 빈 문자열일 경우, 예외를 던지거나 기본값을 설정하는 것이 좋습니다.
-        if (secretKey == null || secretKey.isEmpty()) {
-            throw new IllegalStateException("비밀 키가 설정되지 않았습니다.");
-        }
 
-        // 가져온 시크릿 키를 바이트 배열로 변환
+
+        // 바이트 배열로 변환하여 HMAC-SHA 알고리즘에서 사용할 수 있는 SecretKey 객체를 생성한다.
         byte[] signingKey = secretKey.getBytes();
+        return Keys.hmacShaKeyFor(signingKey); // SecretKey 객체 반환
+    }
 
-        // HMAC-SHA 알고리즘에서 사용할 수 있는 형태로 시크릿 키를 변환 (HMAC-SHA 알고리즘을 사용해 서명을 생성)
-        SecretKey shaKey = Keys.hmacShaKeyFor(signingKey);
+    /**
+     * ✅ JWT **엑세스 토큰 (5일)** 생성
+     */
+    public String createAccessToken(User user) {
+        int exp = 1000 * 60 * 60 * 24 * 5;  // 5일 (밀리초 단위)
+        SecretKey shaKey = getShaKey();
 
-        // 토큰 만료 시간 설정 (7일)
-        int exp = 1000 * 60 * 60 * 24 * 7;  // 7일을 밀리초로 계산
 
         // JWT 토큰을 생성한다.
-        String jwt = Jwts.builder()
+        String accessjwt = Jwts.builder()
                 // 서명 생성: HMAC-SHA512 알고리즘을 사용하여 서명을 생성
                 .signWith(shaKey, Jwts.SIG.HS512)
                 // JWT 헤더에 "typ" 값 설정, "jwt"는 토큰의 유형을 나타냄
@@ -62,39 +62,83 @@ public class JwtProvider {
                 .and()
                 // 토큰 만료 시간 설정
                 .expiration(new Date(System.currentTimeMillis() + exp))
-                // 페이로드에 사용자 정보를 담음
+                // 페이로드에 username, role을 포함시켜서 토큰에 사용자 정보를 담음
                 //JWT에서 Long 타입을 그대로 claim()에 넣으면 문제가 될 수 있습니다
                 //형변환 필요
 
-                .claim("id", user.getId()) // 유저 ID
-                .claim("email", user.getEmail()) // 이메일 (로그인 ID)
-                .claim("nickname", user.getNickname()) // 닉네임
-                .claim("role", user.getRole()) // 권한 (관리자 or 일반유저)
+                .claim("id", user.getId())
+                .claim("role", user.getRole())
+                .claim("nickname", user.getNickname())
                 // 모든 설정이 끝나면 최종적으로 JWT 토큰을 생성하고 반환
                 .compact();
 
-        // 생성된 JWT 토큰을 로그로 출력 (디버깅 용도)
-        log.info("jwt:" + jwt);
 
-        // 생성된 JWT 토큰을 반환
-        return jwt;
-        /* 인코딩되어 header.payload.signature 형태로 반환됨 */
+        log.info("accesstoken생성:" + accessjwt);
+        return accessjwt;
     }
-         /*
-    디코딩된 헤더 예시:
-     {
-      "alg": "HS256",
-     "typ": "jwt"
+
+
+    /**
+     * ✅ JWT **리프레시 토큰 (30일)** 생성
+     */
+    public String createRefreshToken(User user) {
+        int exp = 1000 * 60 * 60 * 24 * 30;  // 30일 (밀리초 단위)
+
+        SecretKey shaKey = getShaKey();
+
+        // JWT 토큰을 생성한다.
+        String refreshjwt = Jwts.builder()
+                // 서명 생성: HMAC-SHA512 알고리즘을 사용하여 서명을 생성
+                .signWith(shaKey, Jwts.SIG.HS512)
+                // JWT 헤더에 "typ" 값 설정, "jwt"는 토큰의 유형을 나타냄
+                .header().add("typ", SecurityConstants.TOKEN_TYPE)
+                .and()
+                // 토큰 만료 시간 설정
+                .expiration(new Date(System.currentTimeMillis() + exp))
+                // 페이로드에 username 포함 (role 불필요)
+                .claim("id", user.getId())
+                // 모든 설정이 끝나면 최종적으로 JWT 토큰을 생성하고 반환
+                .compact();
+
+        log.info("refreshtoken생성:" + refreshjwt);
+
+        return refreshjwt;
+
+
+    }
+
+    /**
+     * ✅ 리프레시 토큰을 사용해 새로운 엑세스 토큰 발급
+     */
+    public String refreshAccessToken(String refreshToken) {
+        try {
+            // 🔹 리프레시 토큰 검증
+            Jws<Claims> claims = Jwts.parser()
+                    .setSigningKey(getShaKey()) // ✅ 서명 검증
+                    .build()
+                    .parseClaimsJws(refreshToken);
+
+            // 🔹 리프레시 토큰에서 유저 정보 가져오기
+            String id = claims.getBody().get("id").toString(); // 유저 ID 가져오기
+
+            // 🔹 DB에서 유저 정보 가져오기
+            User user = userService.getUserById(id);
+            if (user == null || !user.getRefreshtoken().equals(refreshToken)) {
+                throw new IllegalArgumentException("유효하지 않은 리프레시 토큰입니다.");
+            }
+
+            // 🔹 새로운 엑세스 토큰 발급 (5일짜리)
+            return createAccessToken(user);
+
+        } catch (ExpiredJwtException e) {
+            log.error("리프레시 토큰 만료됨!");
+        } catch (JwtException e) {
+            log.error("리프레시 토큰이 유효하지 않음!");
         }
-    디코딩된 페이로드 예시
-    {
 
-    "username": "John Doe",
-    "role": "ROLE_User"
+        return null; // ❌ 리프레시 토큰이 유효하지 않다면 null 반환
     }
-    디코딩된 서명 예시:
-    gzyIHhTYql8DBD2e1e56qebHjiJmELPA9nY3UrtvIQY
-    * */
+
 
 
 
@@ -204,19 +248,4 @@ public class JwtProvider {
 
 
 
-
-    /**
-     * 실제 사용할 수 있는 시크릿키를 반환하는 메서드
-     * @return 시크릿키
-     */
-    public SecretKey getShaKey() {
-        // JwtProps에서 시크릿 키를 가져온다.
-        String secretKey = jwtProps.getSecretKey();
-
-
-
-        // 바이트 배열로 변환하여 HMAC-SHA 알고리즘에서 사용할 수 있는 SecretKey 객체를 생성한다.
-        byte[] signingKey = secretKey.getBytes();
-        return Keys.hmacShaKeyFor(signingKey); // SecretKey 객체 반환
-    }
 }

@@ -1,7 +1,7 @@
 package com.goodsmoa.web.user.Entity;
 
 /*
- ID, 비밀번호, 이메일, 닉네임은 not null임
+ ID, 비밀번호, 닉네임은 not null임
 *
 * */
 
@@ -22,16 +22,16 @@ import java.math.BigInteger;
 public class User {
 
     @Id // 기본 키(PK) 지정
-    @Column(name = "id", length = 30, nullable = false) // 컬럼 이름 설정 및 NULL 값 허용 X
+    @Column(name = "id", nullable = false) // 컬럼 이름 설정 및 NULL 값 허용 X
     private String id; // 유저 ID (기본 키)
 
     @Column(name = "name", length = 10) // 최대 길이 10 설정
     private String name; // 유저 이름
 
-    @Column(name = "password", length = 254, nullable = false) // NULL 허용 X
+    @Column(name = "password", length = 254) // NULL 허용 0 AUTH2로그인은 비번개념없음
     private String password; // 비밀번호
 
-    @Column(name = "email", length = 30, nullable = false) // NULL 허용 X
+    @Column(name = "email", length = 30)
     private String email; // 이메일 주소
 
     @Column(name = "phone_number", length = 15) // 최대 길이 15 설정
@@ -60,4 +60,7 @@ public class User {
 
     @Column(name = "role", nullable = false, columnDefinition = "TINYINT(1) DEFAULT 0") // 기본값 0
     private Boolean role = false; // 0: 일반 유저, 1: 관리자
+
+    @Column
+    private String refreshtoken;
 }
