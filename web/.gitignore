@@ -93,6 +93,10 @@ problems-report.html
 # *.ipr
 .idea/misc.xml
 .idea/workspace.xml
+
+# 파일 시스템 관련 임시 파일 무시
+file-system.probe
+
 # Sonarlint plugin
 # https://plugins.jetbrains.com/plugin/7973-sonarlint
 .idea/**/sonarlint/
