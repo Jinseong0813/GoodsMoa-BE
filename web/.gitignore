@@ -30,3 +30,4 @@ gradle.lockfile       # Gradle 의존성 파일
 # 기타 설정 파일들
 *.log                 # 로그 파일들
 *.tmp                 # 임시 파일들
+*.xml

@@ -22,15 +22,12 @@
 
 
 
-package user.service;
+package com.goodsmoa.web.user.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import user.Entity.User;
-import user.repository.UserRepository;
-
-import java.math.BigInteger;
+import com.goodsmoa.web.user.Entity.User;
+import com.goodsmoa.web.user.repository.UserRepository;
 
 @Service // 이 클래스가 서비스임을 Spring에게 알려주는 어노테이션
 public class UserService {

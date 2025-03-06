@@ -2,21 +2,20 @@
 //✔ 로그인 성공하면 JWT를 생성하고 응답헤더로 반환
 //✔ 클라이언트가 JWT를 받아서 저장하고 API 호출할 때 사용
 
-package security.handler;
+package com.goodsmoa.web.security.handler;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
-import security.provider.JwtProvider;
-import user.Entity.User;
+import com.goodsmoa.web.security.provider.JwtProvider;
+import com.goodsmoa.web.user.Entity.User;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import security.constrants.SecurityConstants;
+import com.goodsmoa.web.security.constrants.SecurityConstants;
 @Component
 public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 

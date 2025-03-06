@@ -1,16 +1,16 @@
 
 /*✅ 카카오에서 사용자 정보를 가져오고 새 유저면 회원가입/ 기존이면 로그인 진행하고 jwt 발급 !*/
 
-package security.service;
+package com.goodsmoa.web.security.service;
 
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
 import org.springframework.stereotype.Service;
-import user.Entity.User;
-import user.repository.UserRepository;
-import security.provider.JwtProvider;
+import com.goodsmoa.web.user.Entity.User;
+import com.goodsmoa.web.user.repository.UserRepository;
+import com.goodsmoa.web.security.provider.JwtProvider;
 import java.util.Map;
 import java.util.Optional;
 

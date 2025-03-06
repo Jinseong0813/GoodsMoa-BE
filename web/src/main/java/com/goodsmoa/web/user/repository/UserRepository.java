@@ -17,16 +17,13 @@
 
 
 
-package user.repository;
+package com.goodsmoa.web.user.repository;
 
 
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import user.Entity.User;
-
-import java.math.BigInteger;
-
+import com.goodsmoa.web.user.Entity.User;
 
 
 @Repository // 이 클래스가 Repository임을 알려주는 어노테이션

@@ -13,7 +13,7 @@
 // 해당 클래스는 Spring Boot의 `@ConfigurationProperties`
 // 어노테이션을 사용하여, application.properties(속성 설정 파일) 로부터
 // JWT 관련 프로퍼티를 관리하는 프로퍼티 클래스입니다.
-package security.props;   // 이 파일이 속한 패키지. 보통 클래스의 경로를 나타냄.
+package com.goodsmoa.web.security.props;   // 이 파일이 속한 패키지. 보통 클래스의 경로를 나타냄.
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
