@@ -37,7 +37,7 @@
 # auto-import.
 # .idea/artifacts
 # .idea/artifacts
-# .idea/compiler.xml
+.idea/compiler.xml
 # .idea/jarRepositories.xml
 # .idea/modules.xml
 # .idea/*.iml
@@ -82,7 +82,7 @@ fabric.properties
 .idea/caches/build_file_checksums.ser
 
 # 자동 생성된 파일을 무시
-problems-report.html
+build/reports/problems/problems-report.html
 
 ### Intellij Patch ###
 # Comment Reason: https://github.com/joeblau/gitignore.io/issues/186#issuecomment-215987721
