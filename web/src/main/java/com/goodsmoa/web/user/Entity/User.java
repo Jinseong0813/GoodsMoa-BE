@@ -28,8 +28,6 @@ public class User {
     @Column(name = "name", length = 10) // 최대 길이 10 설정
     private String name; // 유저 이름
 
-    @Column(name = "password", length = 254) // NULL 허용 0 AUTH2로그인은 비번개념없음
-    private String password; // 비밀번호
 
     @Column(name = "email", length = 30)
     private String email; // 이메일 주소

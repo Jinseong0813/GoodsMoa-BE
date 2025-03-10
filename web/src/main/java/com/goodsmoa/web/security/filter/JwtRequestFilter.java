@@ -38,7 +38,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     }
 
 
-    // ✅ 특정 URL은 필터 적용 안 함
+    /*// ✅ 특정 URL은 필터 적용 안 함
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
         String requestURI = request.getRequestURI();
@@ -59,21 +59,14 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         }
 
         return isExcluded;
-    }
+    }*/
 
 
 
 
 
-    /**
-     * 필터에서 수행하는 작업
-     * 1. JWT 추출
-     * 2. 인증 시도
-     * 3. JWT 검증
-     *      ⭕ 토큰이 유효하면->ok securtycontext에 저장
-     *      ❌ 토큰이 만료되거나 변조-> ㄲㅈ securitycontext에서 제거한다
 
-     */
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {

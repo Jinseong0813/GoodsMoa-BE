@@ -56,6 +56,8 @@ dependencies {
 	runtimeOnly 'mysql:mysql-connector-java:8.0.33'
 
 
+
+
 	// [Lombok Annotation Processor]
 	// Lombok이 어노테이션을 처리할 수 있도록 도와주는 설정!
 	annotationProcessor 'org.projectlombok:lombok'

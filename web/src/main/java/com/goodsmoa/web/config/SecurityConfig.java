@@ -67,7 +67,7 @@ public class SecurityConfig {
     }
 
     // CORS 설정을 위한 CorsConfigurationSource 빈
-    // ✅ CORS 설정 (React 프론트엔드 요청 허용)
+    // ✅ CORS 설정 (React 프론트엔드 요청 허용 지금은 개발단계라 걍 모든 주소에서 요청다 ㅇㅋ하게함)
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
@@ -120,7 +120,6 @@ public class SecurityConfig {
 
 
 
-        //이거 왜인지 작동안함-> 걍 필터에서 처리함
         http.authorizeHttpRequests(auth -> auth
                 .requestMatchers("/login/**", "/oauth2/**", "/public/**", "/error").permitAll() // ✅ 로그인 관련 요청 모두 허용
                 .requestMatchers("/mypage/**", "/orders/**", "/cart/**").authenticated() // 로그인 필요

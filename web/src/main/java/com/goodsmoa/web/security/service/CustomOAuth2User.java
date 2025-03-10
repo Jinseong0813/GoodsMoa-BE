@@ -1,12 +1,3 @@
-/*
-* 📌 CustomOAuth2User의 역할
-✅ OAuth2 로그인한 사용자 정보를 감싸서 Spring Security에서 사용할 수 있도록 변환하는 클래스!
-✅ 우리 User 엔티티를 OAuth2User처럼 동작하도록 만들어 주는 역할!
-✅ OAuth2User 인터페이스를 구현해서 Spring Security가 이 객체를 인증 정보로 사용할 수 있게 해줘!
-
-✔ 즉, CustomOAuth2User는 일반 유저 데이터를 Spring Security에서 사용 가능한 형태로 변환하는 클래스야!
-✔ 엔티티(Entity)가 아니라, OAuth2 인증을 위한 "서비스 객체"야!
-* */
 
 
 
@@ -24,11 +15,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-/**
- * ✅ OAuth2User를 구현한 CustomOAuth2User 클래스
- * - 우리 서버의 User 엔티티를 Spring Security에서 사용할 수 있도록 감싸는 역할!
- * - Spring Security의 OAuth2 인증 과정에서 사용됨.
- */
+
 @Getter
 public class CustomOAuth2User implements OAuth2User {
 

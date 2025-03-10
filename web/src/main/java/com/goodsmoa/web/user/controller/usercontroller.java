@@ -1,4 +1,4 @@
-package com.goodsmoa.web.user.Controller;
+package com.goodsmoa.web.user.controller;
 
 
 import org.springframework.http.ResponseEntity;

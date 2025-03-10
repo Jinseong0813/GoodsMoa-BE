@@ -1,5 +1,4 @@
 
-/* jwt 토큰 페이로드에는 id, role, nickname 넣음 */
 
 package com.goodsmoa.web.security.provider;
 
@@ -46,10 +45,11 @@ public class JwtProvider {
     }
 
     /**
-     * ✅ JWT **엑세스 토큰 (5일)** 생성
+     * ✅ JWT **엑세스 토큰 (5분)** 생성
      */
     public String createAccessToken(User user) {
-        int exp = 1000 * 60 * 60 * 24 * 5;  // 5일 (밀리초 단위)
+        int exp = 1000 * 60 * 5;  // 5분 (밀리초 단위)
+
         SecretKey shaKey = getShaKey();
 
 
@@ -82,7 +82,7 @@ public class JwtProvider {
      * ✅ JWT **리프레시 토큰 (30일)** 생성
      */
     public String createRefreshToken(User user) {
-        int exp = 1000 * 60 * 60 * 24 * 30;  // 30일 (밀리초 단위)
+        long exp = 1000L * 60 * 60 * 24 * 30;  // ✅ `long`으로 변경
 
         SecretKey shaKey = getShaKey();
 
@@ -100,7 +100,6 @@ public class JwtProvider {
                 // 모든 설정이 끝나면 최종적으로 JWT 토큰을 생성하고 반환
                 .compact();
 
-        log.info("refreshtoken생성:" + refreshjwt);
 
         return refreshjwt;
 
