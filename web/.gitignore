@@ -63,10 +63,6 @@ out/
 # JIRA plugin
 atlassian-ide-plugin.xml
 
-# .gradle, .idea 무시
-web/.gradle/
-web/.idea/
-
 # Cursive Clojure plugin
 .idea/replstate.xml
 
